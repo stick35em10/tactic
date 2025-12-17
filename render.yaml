@@ -9,7 +9,7 @@ services:
     name: tactic-backend
     plan: free
     runtime: docker
-    dockerfilePath: Dockerfile
+    dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
     envVars:
       - key: DATABASE_URL
@@ -25,7 +25,7 @@ services:
     name: tactic-frontend
     plan: free
     runtime: docker
-    dockerfilePath: Dockerfile
+    dockerfilePath: ./frontend/Dockerfile
     dockerContext: ./frontend
     envVars:
       - key: REACT_APP_API_URL
