@@ -4,6 +4,8 @@ from fastapi.responses import JSONResponse
 import pandas as pd
 from datetime import datetime
 import os
+from app.utils.generators import MozambiqueDataGenerator
+from app.etl.load import save_to_database, load_from_database
 
 app = FastAPI(
     title="TACTIC Climate-Health API",
@@ -55,11 +57,22 @@ async def get_provinces():
     ]
     return provinces
 
+@app.post("/api/data/generate-and-load")
+async def generate_and_load_data(rows: int = 100):
+    """Gera dados sintéticos e os carrega no banco de dados."""
+    try:
+        generator = MozambiqueDataGenerator()
+        df = generator.generate_climate_health_data(rows)
+        inserted_rows = save_to_database(df)
+        return {"status": "success", "message": f"{inserted_rows} linhas de dados sintéticos geradas e carregadas com sucesso."}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao gerar e carregar dados: {str(e)}")
+
 @app.get("/api/data/synthetic")
 async def generate_synthetic_data(rows: int = 100, year: int = 2024):
     """Gera dados sintéticos para demonstração"""
     try:
-        from utils.generators import MozambiqueDataGenerator
+        from app.utils.generators import MozambiqueDataGenerator
         generator = MozambiqueDataGenerator()
         data = generator.generate_climate_health_data(rows)
         
