@@ -8,7 +8,7 @@ RUN npm install --silent
 
 # Copiar código e build
 COPY . ./
-RUN npm run build
+RUN PUBLIC_URL=. npm run build
 
 # Nginx para servir
 FROM nginx:alpine
