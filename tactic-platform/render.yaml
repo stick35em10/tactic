@@ -1,8 +1,14 @@
 services:
-  # Backend API
+  - type: pserv
+    name: tactic-db
+    plan: free
+    databaseName: tactic_db
+    user: tactic_user
+
   - type: web
     name: tactic-backend
-    env: docker
+    plan: free
+    runtime: docker
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
     envVars:
@@ -12,20 +18,18 @@ services:
           property: connectionString
       - key: PYTHONUNBUFFERED
         value: 1
-    healthCheckPath: /health
+      - key: ENV
+        value: production
 
-  # Frontend
   - type: web
     name: tactic-frontend
-    env: docker
+    plan: free
+    runtime: docker
     dockerfilePath: ./frontend/Dockerfile
     dockerContext: ./frontend
     envVars:
       - key: REACT_APP_API_URL
-        value: https://tactic-backend.onrender.com
-
-databases:
-  - name: tactic-db
-    databaseName: tactic_db
-    user: tactic_user
-    plan: starter
+        fromService:
+          type: web
+          name: tactic-backend
+          property: url
