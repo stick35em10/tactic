@@ -28,5 +28,5 @@ services:
     dockerfilePath: ./frontend/Dockerfile
     dockerContext: ./frontend
     envVars:
-      - key: REACT_APP_API_URL
+      - key: API_URL
         value: https://tactic-5bmd.onrender.com
