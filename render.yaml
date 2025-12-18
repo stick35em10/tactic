@@ -29,7 +29,4 @@ services:
     dockerContext: ./frontend
     envVars:
       - key: REACT_APP_API_URL
-        fromService:
-          type: web
-          name: tactic-backend
-          property: url
+        value: https://tactic-5bmd.onrender.com
