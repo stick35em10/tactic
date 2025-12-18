@@ -29,4 +29,4 @@ services:
     dockerContext: ./frontend
     envVars:
       - key: API_URL
-        value: https://tactic-5bmd.onrender.com
+        value: "hello"
