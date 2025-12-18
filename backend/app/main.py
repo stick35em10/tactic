@@ -4,8 +4,8 @@ from fastapi.responses import JSONResponse
 import pandas as pd
 from datetime import datetime
 import os
-from app.utils.generators import MozambiqueDataGenerator
-from app.etl.load import save_to_database, load_from_database
+from utils.generators import MozambiqueDataGenerator
+from etl.load import save_to_database, load_from_database
 
 app = FastAPI(
     title="TACTIC Climate-Health API",
@@ -72,7 +72,7 @@ async def generate_and_load_data(rows: int = 100):
 async def generate_synthetic_data(rows: int = 100, year: int = 2024):
     """Gera dados sintéticos para demonstração"""
     try:
-        from app.utils.generators import MozambiqueDataGenerator
+        from utils.generators import MozambiqueDataGenerator
         generator = MozambiqueDataGenerator()
         data = generator.generate_climate_health_data(rows)
         
