@@ -3,17 +3,17 @@ FROM node:18-alpine as build
 WORKDIR /app
 
 # Copiar package files
-COPY frontend/package*.json ./
+COPY package*.json ./
 RUN npm install --silent
 
 # Copiar código e build
-COPY frontend/. ./
+COPY . ./
 RUN PUBLIC_URL=. npm run build
 
 # Nginx para servir
 FROM nginx:alpine
 COPY --from=build /app/build /usr/share/nginx/html
-COPY frontend/nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
