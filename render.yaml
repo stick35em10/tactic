@@ -27,6 +27,11 @@ services:
     runtime: docker
     dockerfilePath: ./frontend/Dockerfile
     dockerContext: ./frontend
+    envVarGroups:
+      - name: frontend-vars
+
+envVarGroups:
+  - name: frontend-vars
     envVars:
       - key: API_URL
-        value: "hello"
+        value: https://tactic-5bmd.onrender.com
